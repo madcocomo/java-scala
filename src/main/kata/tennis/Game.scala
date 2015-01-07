@@ -8,7 +8,7 @@ class Game {
       val name2 = names(point2)
       s"$name1,$name2"
     } else {
-      "Player 1 wins"
+      "Federer wins"
     }
 
   }
