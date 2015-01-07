@@ -1,6 +1,6 @@
 package kata.tennis
 
-class Game {
+class Game(player1: String, player2: String) {
   val names = List("Love", "Fifteen", "Thirty", "Forty").toArray
   def scores(point1: Int, point2: Int) = {
     if (point1 < 4) {
@@ -8,7 +8,7 @@ class Game {
       val name2 = names(point2)
       s"$name1,$name2"
     } else {
-      "Federer wins"
+      s"$player1 wins"
     }
 
   }

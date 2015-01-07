@@ -3,7 +3,7 @@ package kata.tennis
 import org.scalatest.{Matchers, FlatSpec}
 
 class Tennistest extends FlatSpec with Matchers{
-  val game = new Game()
+  val game = new Game("Federer", "Nadal")
   "Scores" should "return score names" in {
     game.scores(1,0) shouldBe "Fifteen,Love"
     game.scores(2,0) shouldBe "Thirty,Love"
