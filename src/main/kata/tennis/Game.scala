@@ -1,21 +1,17 @@
 package kata.tennis
 
 class Game(player1: String, player2: String) {
-  val names = List("Love", "Fifteen", "Thirty", "Forty").toArray
+  val scoreNames = List("Love", "Fifteen", "Thirty", "Forty").toArray
   def scores(point1: Int, point2: Int) = {
     if (point1 < 4 && point2 < 4) {
-      val name1 = names(point1)
-      val name2 = names(point2)
-      s"$name1,$name2"
-    } else if (point1 > point2) {
-      s"$player1 wins"
+      s"${scoreNames(point1)},${scoreNames(point2)}"
     } else {
-      s"$player2 wins"
+      val winner = if (point1 > point2) {
+        player1
+      } else {
+        player2
+      }
+      s"$winner wins"
     }
-
-  }
-
-  def scoreName(point1: Int): String = {
-    names(point1)
   }
 }
