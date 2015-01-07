@@ -3,12 +3,14 @@ package kata.tennis
 class Game(player1: String, player2: String) {
   val names = List("Love", "Fifteen", "Thirty", "Forty").toArray
   def scores(point1: Int, point2: Int) = {
-    if (point1 < 4) {
+    if (point1 < 4 && point2 < 4) {
       val name1 = names(point1)
       val name2 = names(point2)
       s"$name1,$name2"
-    } else {
+    } else if (point1 > point2) {
       s"$player1 wins"
+    } else {
+      s"$player2 wins"
     }
 
   }

@@ -13,5 +13,6 @@ class Tennistest extends FlatSpec with Matchers{
 
   it should "return winner name" in {
     game.scores(4,2) shouldBe "Federer wins"
+    game.scores(0,4) shouldBe "Nadal wins"
   }
 }
