@@ -10,4 +10,5 @@ class Tennistest extends FlatSpec with Matchers{
     game.scores(3,0) shouldBe "Forty,Love"
     game.scores(0,1) shouldBe "Love,Fifteen"
   }
+
 }
