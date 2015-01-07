@@ -11,4 +11,8 @@ class Tennistest extends FlatSpec with Matchers{
     game.scores(0,1) shouldBe "Love,Fifteen"
   }
 
+  it should "return winner name" in {
+    val game = new Game()
+    game.scores(4,2) shouldBe "Player 1 wins"
+  }
 }
