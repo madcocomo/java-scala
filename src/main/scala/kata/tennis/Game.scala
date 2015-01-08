@@ -16,12 +16,9 @@ class Game(player1: String, player2: String) {
 
   object Win {
     def unapply(points:(Int, Int)): Option[String] = {
+      import points._
       new Some(
-        if (points._1 > points._2) {
-          player1
-        } else {
-          player2
-        }
+        if (_1 > _2) player1 else player2
       )
     }
   }
