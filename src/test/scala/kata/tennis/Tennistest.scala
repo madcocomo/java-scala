@@ -19,4 +19,8 @@ class Tennistest extends FlatSpec with Matchers{
   it should "return name all" in {
     game.scores(0,0) shouldBe "Love all"
   }
+
+  it should "return Deuce" in {
+    game.scores(3,3) shouldBe "Deuce"
+  }
 }

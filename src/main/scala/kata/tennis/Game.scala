@@ -3,6 +3,7 @@ package kata.tennis
 class Game(player1: String, player2: String) {
   def scores(point1: Int, point2: Int) = {
     (point1, point2) match {
+      case Draw(p @(Score(name1), _)) if p._1==3 && p._2==3 => s"Deuce"
       case Draw(Score(name1), _) => s"$name1 all"
       case (Score(name1), Score(name2)) => s"$name1,$name2"
       case Win(winner) => s"$winner wins"
