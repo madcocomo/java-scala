@@ -6,8 +6,8 @@ class Game(player1: String, player2: String) {
       case Draw(Deuce()) => "Deuce"
       case Draw(Score(name1), _) => s"$name1 all"
       case (Score(name1), Score(name2)) => s"$name1,$name2"
-      case Win(winner) if point1 - point2 == 1 => s"Advantage $winner"
-      case Win(winner) => s"$winner wins"
+      case Win(Advantage(player)) => s"$player wins"
+      case Advantage(player) => s"Advantage $player"
       case _ =>
     }
   }
@@ -17,12 +17,19 @@ class Game(player1: String, player2: String) {
       Array("Love", "Fifteen", "Thirty", "Forty").lift(point)
   }
 
-  object Win {
+  object Advantage {
     def unapply(points:(Int, Int)): Option[String] = {
       import points._
       new Some(
         if (_1 > _2) player1 else player2
       )
+    }
+  }
+
+  object Win {
+    def unapply(points:(Int, Int)): Option[(Int,Int)] = {
+      import points._
+      if ((_1-_2).abs > 1) new Some(points) else None
     }
   }
 
