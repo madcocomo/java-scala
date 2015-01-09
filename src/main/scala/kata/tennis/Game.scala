@@ -33,7 +33,7 @@ class Game(player1: String, player2: String) {
   }
 
   object Deuce {
-    def unapply(points:(Int, Int)): Boolean = points._1==3 && points._2==3
+    def unapply(points:(Int, Int)): Boolean = points._1>=3 && points._2>=3
   }
 
 }
