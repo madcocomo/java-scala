@@ -6,6 +6,7 @@ class Game(player1: String, player2: String) {
       case Draw(Deuce()) => "Deuce"
       case Draw(Score(name1), _) => s"$name1 all"
       case (Score(name1), Score(name2)) => s"$name1,$name2"
+      case Win(winner) if point1 - point2 == 1 => s"Advantage $winner"
       case Win(winner) => s"$winner wins"
       case _ =>
     }
