@@ -33,23 +33,21 @@ class Game(player1: String, player2: String) {
     }
   }
 
-  abstract class Draw {
-    def pf: PartialFunction[(Int, Int), (Int,Int)]
+  case class pfExtractor(pf: PartialFunction[(Int, Int), (Int,Int)]) {
     def unapply(points:(Int, Int)): Option[(Int, Int)] = pf.lift(points)
-//      if (points._1 == points._2) new Some(points)
-//      else None
-
-  }
-  object Draw extends Draw {
-    override def pf: PartialFunction[(Int, Int), (Int, Int)] = {
-      case (p1,p2) if p1 == p2 => (p1, p2)
-    }
   }
 
-  object Deuce extends Draw {
-    override def pf: PartialFunction[(Int, Int), (Int, Int)] = {
-      case (p1,p2) if p1 == p2 && p1 >= 3 => (p1, p2)
-    }
+  class DrawPf extends PartialFunction[(Int, Int), (Int, Int)] {
+    override def isDefinedAt(x: (Int, Int)): Boolean = x._1 == x._2
+    override def apply(v1: (Int, Int)): (Int, Int) = v1
   }
+
+  object Draw extends pfExtractor (new DrawPf)
+
+  object Deuce extends pfExtractor (
+    new DrawPf() {
+      override def isDefinedAt(x: (Int, Int)) = x._1 >= 3 && super.isDefinedAt(x)
+    }
+  )
 
 }
