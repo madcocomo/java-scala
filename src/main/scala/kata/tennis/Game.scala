@@ -17,24 +17,8 @@ class Game(player1: String, player2: String) {
       Array("Love", "Fifteen", "Thirty", "Forty").lift(point)
   }
 
-  object Advantage {
-    def unapply(points:(Int, Int)): Option[String] = {
-      import points._
-      new Some(
-        if (_1 > _2) player1 else player2
-      )
-    }
-  }
-
-  object Win {
-    def unapply(points:(Int, Int)): Option[(Int,Int)] = {
-      import points._
-      if ((_1-_2).abs > 1) new Some(points) else None
-    }
-  }
-
-  case class pfExtractor(pf: PartialFunction[(Int, Int), (Int,Int)]) {
-    def unapply(points:(Int, Int)): Option[(Int, Int)] = pf.lift(points)
+  case class PFExtractor[T](pf: PartialFunction[(Int, Int), T]) {
+    def unapply(points:(Int, Int)): Option[T] = pf.lift(points)
   }
 
   class DrawPf extends PartialFunction[(Int, Int), (Int, Int)] {
@@ -42,12 +26,25 @@ class Game(player1: String, player2: String) {
     override def apply(v1: (Int, Int)): (Int, Int) = v1
   }
 
-  object Draw extends pfExtractor (new DrawPf)
+  object Draw extends PFExtractor(new DrawPf)
 
-  object Deuce extends pfExtractor (
+  object Deuce extends PFExtractor (
     new DrawPf() {
       override def isDefinedAt(x: (Int, Int)) = x._1 >= 3 && super.isDefinedAt(x)
     }
   )
+
+  class WinPf extends PartialFunction[(Int,Int),(Int,Int)] {
+    override def isDefinedAt(x: (Int, Int)): Boolean = (x._1-x._2).abs > 1
+    override def apply(v1: (Int, Int)): (Int, Int) = v1
+  }
+  object Win extends PFExtractor (new WinPf)
+
+  class AdvantagePf extends PartialFunction[(Int,Int), String] {
+    override def isDefinedAt(x: (Int, Int)): Boolean = x._1 != x._2
+    override def apply(v1: (Int, Int)): String = if (v1._1 > v1._2) player1 else player2
+  }
+
+  object Advantage extends PFExtractor (new AdvantagePf)
 
 }
