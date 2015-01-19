@@ -8,7 +8,7 @@ class Game(player1: String, player2: String) {
       case (Score(name1), Score(name2)) => s"$name1,$name2"
       case Win(player) => s"$player wins"
       case Advantage(player) => s"Advantage $player"
-      case _ =>
+      case _ => "Not going to happen"
     }
   }
 
@@ -33,13 +33,19 @@ class Game(player1: String, player2: String) {
   object Deuce extends PFExtractor (new DeucePf)
 
   class AdvantagePf extends PartialFunction[(Int,Int), String] {
-    override def isDefinedAt(x: (Int, Int)): Boolean = x._1 != x._2
+    override def isDefinedAt(x: (Int, Int)): Boolean = {
+      val (p1, p2) = x
+      (p1.min(p2) >= 3) && p1 != p2
+    }
     override def apply(v1: (Int, Int)): String = if (v1._1 > v1._2) player1 else player2
   }
   object Advantage extends PFExtractor (new AdvantagePf)
 
   class WinPf extends AdvantagePf{
-    override def isDefinedAt(x: (Int, Int)): Boolean = (x._1-x._2).abs > 1
+    override def isDefinedAt(x: (Int, Int)): Boolean = {
+      val (p1, p2) = x
+      (p1.max(p2) == 4 && p1.min(p2) < 3)  || ((p1 - p2).abs == 2)
+    }
   }
   object Win extends PFExtractor (new WinPf)
 

@@ -28,4 +28,8 @@ class Tennistest extends FlatSpec with Matchers{
   it should "return advantage player name" in {
     game.scores(4,3) shouldBe "Advantage Federer"
   }
+
+  it should "return error" in {
+    game.scores(10, 2) shouldBe "Not going to happen"
+  }
 }
