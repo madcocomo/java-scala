@@ -1,4 +1,4 @@
-name := """java&scala"""
+name := """java-scala"""
 
 version := "1.0"
 
